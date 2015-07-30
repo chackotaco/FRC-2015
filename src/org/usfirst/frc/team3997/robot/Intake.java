@@ -61,15 +61,20 @@ public class Intake {
 				extendIntake();
 			}
 			else if(ifIntakeForward()){
-				retractIntake();
 				
 				intakeMotorPos = 0;	//turn off motors
 				intakeMotorsManual(intakeMotorPos);
+				
+				
+				retractIntake();
+				
+				
 			}
 			else if(ifIntakeReverse()){
-				extendIntake();
 				
 				updateMotorDirection = 1; //reset motor direction
+				
+				extendIntake();
 			}
 		}
 	}
@@ -81,7 +86,8 @@ public class Intake {
 	 * Returns:
 	 * 		N/A
 	 * Notes:
-	 * 		
+	 * 		also allows for intakeMotorButton to spin wheels while pistons are retracted.
+	 * 		pressing this button should cycle the motors between off, intake, and outake
 	 * Type: Method	
 	 **********************************************************************/
 	public static void runIntakeMotors(){
@@ -236,8 +242,8 @@ public class Intake {
 	 * Type: Method	
 	 **********************************************************************/
 	public static void mIntakeNormal(){
-		mIntakeLeftMotor(reverse);
-		mIntakeRightMotor(forward);
+		mIntakeLeftMotor(reverse * updateMotorDirection);
+		mIntakeRightMotor(forward * updateMotorDirection);
 	}
 	
 	/****************************mIntakeLeftMotor()*******************************
@@ -252,7 +258,7 @@ public class Intake {
 	 * Type: Method	
 	 **********************************************************************/
 	public static void mIntakeLeftMotor(int direction){
-		mIntakeLeft.set(Controls.intakeSpeed * direction * updateMotorDirection);
+		mIntakeLeft.set(Controls.intakeSpeed * direction);
 	}
 	
 	/****************************mIntakeLeftMotor()*******************************
@@ -267,7 +273,7 @@ public class Intake {
 	 * Type: Method	
 	 **********************************************************************/
 	public static void mIntakeRightMotor(int direction){
-		mIntakeRight.set(Controls.intakeSpeed * direction * updateMotorDirection);
+		mIntakeRight.set(Controls.intakeSpeed * direction);
 	}
 	
 }
