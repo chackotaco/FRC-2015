@@ -8,8 +8,8 @@ public class Controls {
 	// Grabber, intake, supports
 	public static final int grabberButton = 5;
 	public static final int intakeButton = 6;
-	public static final int intakeMotorOut = 3;
 	public static final int intakeMotorIn = 1;
+	public static final int intakeMotorOut = 3;
 	public static final int supportButton = 2;
 	
 	// Lifter
