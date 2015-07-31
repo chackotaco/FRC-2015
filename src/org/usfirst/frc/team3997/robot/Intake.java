@@ -7,7 +7,8 @@ public class Intake {
 	public static Talon mIntakeLeft;
 	public static Talon mIntakeRight;
 	private static Debounce intakeDebounce;	
-	private static Debounce reverseIntakeDebounce;	
+	private static Debounce intakeMotorInDebounce;
+	private static Debounce intakeMotorOutDebounce;	
 	private static int forward = 1;
 	private static int reverse = -1;
 	private static int updateMotorDirection = 1;
@@ -41,7 +42,8 @@ public class Intake {
 		mIntakeRight = new Talon(intakeMotorPins[1]);
 		
 		intakeDebounce = new Debounce(Intake.gamePad, Controls.intakeButton);
-		reverseIntakeDebounce = new Debounce(Intake.gamePad, Controls.reverseIntakeMotorsButton);
+		intakeMotorInDebounce = new Debounce(Intake.gamePad, Controls.intakeMotorIn);
+		intakeMotorOutDebounce = new Debounce(Intake.gamePad, Controls.intakeMotorOut);
 	}
 	
 	/****************************runIntakePistons()*******************************
@@ -94,11 +96,11 @@ public class Intake {
 		
 		if(ifIntakeForward() ){ 
 			mIntakeNormal(); //not sure if this should be here or in runIntakePistons (iterating through sets this each time it iterates)
-			if(reverseIntakeDebounce.getRise()){
+			if(intakeMotorInDebounce.getRise()){
 				updateMotorDirection = -updateMotorDirection;
 			}
 		}
-		else if(reverseIntakeDebounce.getRise() && ifIntakeReverse() ){
+		else if(intakeMotorOutDebounce.getRise() && ifIntakeReverse() ){
 			intakeMotorPos++;
 			intakeMotorsManual(intakeMotorPos % 3);
 		}

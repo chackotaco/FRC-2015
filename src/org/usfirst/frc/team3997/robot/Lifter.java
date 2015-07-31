@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public class Lifter {
 	private static int numClaws;							// Number of claws on the robot
 	
-	public static final double clawSpacing = 14.5;    	//claw spacing
+	public static final double clawSpacing = 14;    	//claw spacing
 	public static final double floorHeight = 0;				//Variable exits for reference reasons
 	public static final double platformHeight = 2;			//Height of scoring platform in inches
 	public static final double stepHeight = 5.75;			//Height of step in inches
