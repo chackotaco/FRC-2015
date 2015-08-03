@@ -29,7 +29,6 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	
     	/* Drivetrain object */
     	driveTrain = new RobotDrive(Controls.frontLeftPin,Controls.rearLeftPin,Controls.frontRightPin,Controls.rearRightPin);  
     	driveTrain.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true); //|Used to invert right motors
@@ -87,6 +86,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
     	Teleop.initTeleOP(gamePad, moveStick, rotateStick);
     	printString("FMS Mode:", "Entering Teleop");
+    	
 	}
     
     /**

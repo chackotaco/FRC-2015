@@ -27,7 +27,7 @@ public class Lifter {
 	private static double liftP = 0.55;						//Lifter PID constants  //0.80
 	private static double liftI = 0.00;
 	private static double liftD = 0.35;												//0.43
-	private static final double outMax = 0.6;				// Outmax changed from 0.5 to 0.4 on friday of alamo
+	private static final double outMax = 0.5;				// Outmax changed from 0.5 to 0.4 on friday of alamo
 	private static final double outMin = -0.50;				//Output range limits
 	public static final double tolerance = 0.5;				//Tolerance in inches allowable for lifter to be "on target"
 
@@ -313,7 +313,7 @@ public class Lifter {
 	 * 		state number and offset height.
 	 * Parameters:
 	 * 		int currentState:  A number between 0-(numClaws + 1) which gives a
-	 * 							derived first claw position
+	 * 		derived first claw position
 	 * 		double offsetHeight:  Height in inches to the working surface
 	 * Returns:
 	 * 		N/A
@@ -332,7 +332,7 @@ public class Lifter {
 		
 		if (currentState > 0 && currentState <= (numClaws + 1)){
 			//add variables to liftPosition
-			liftPosition = readyDistance + currentOffset + clawSpacing*(currentState-1);
+			liftPosition = readyDistance + currentOffset + clawSpacing * (currentState - 1);
 		}
 		
 		else if (currentState == 0){

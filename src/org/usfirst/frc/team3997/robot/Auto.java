@@ -380,6 +380,7 @@ public class Auto {
 	
 	
 	
+	
 	/*****************************autoProgram2()***********************************
 	 * Purpose:
 	 * 		Robot strafes to the right in autonomous

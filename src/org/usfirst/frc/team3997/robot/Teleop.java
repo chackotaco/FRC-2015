@@ -49,9 +49,10 @@ public class Teleop {
 		
     	/* Run the lifter, grabber, and supports*/
     	Lifter.runLifter();
-    	Grabber.runGrabber();
-    	Intake.runIntakePistons();
-    	Intake.runIntakeMotors();
+ 
+    //Grabber.runGrabber();
+    	//Intake.runIntakePistons();
+    	//Intake.runIntakeMotors();
     	Supports.runSupports();
     	
         /* Read drive values from specified joystick */

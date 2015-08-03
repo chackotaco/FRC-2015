@@ -7,12 +7,12 @@ public class Intake {
 	public static Talon mIntakeLeft;
 	public static Talon mIntakeRight;
 	private static Debounce intakeDebounce;	
-	private static Debounce intakeMotorInDebounce;
-	private static Debounce intakeMotorOutDebounce;	
+//	private static Debounce intakeMotorInDebounce;
+//	private static Debounce intakeMotorOutDebounce;	
 	private static int forward = 1;
 	private static int reverse = -1;
-	private static int updateMotorDirection = 1;
-	private static int intakeMotorPos = 0;
+//	private static int buttonInState;
+//	private static int buttonOutState;
 	
 
 
@@ -34,7 +34,11 @@ public class Intake {
 		sIntake = new DoubleSolenoid(intakePins[0], intakePins[1]);
 		sIntake.set(DoubleSolenoid.Value.kOff);
 		
+	//	buttonInState=0;
+	//	buttonOutState=0;
+		
 		// bring intake back
+
 		retractIntake();
 		
 		// Motor initialization
@@ -42,8 +46,10 @@ public class Intake {
 		mIntakeRight = new Talon(intakeMotorPins[1]);
 		
 		intakeDebounce = new Debounce(Intake.gamePad, Controls.intakeButton);
-		intakeMotorInDebounce = new Debounce(Intake.gamePad, Controls.intakeMotorIn);
-		intakeMotorOutDebounce = new Debounce(Intake.gamePad, Controls.intakeMotorOut);
+		//intakeMotorInDebounce = new Debounce(Intake.gamePad, Controls.intakeMotorIn);
+		//intakeMotorOutDebounce = new Debounce(Intake.gamePad, Controls.intakeMotorOut);
+		
+		intakeMotorsManual(0);
 	}
 	
 	/****************************runIntakePistons()*******************************
@@ -63,18 +69,11 @@ public class Intake {
 				extendIntake();
 			}
 			else if(ifIntakeForward()){
-				
-				intakeMotorPos = 0;	//turn off motors
-				intakeMotorsManual(intakeMotorPos);
-				
-				
 				retractIntake();
 				
 				
 			}
 			else if(ifIntakeReverse()){
-				
-				updateMotorDirection = 1; //reset motor direction
 				
 				extendIntake();
 			}
@@ -82,28 +81,28 @@ public class Intake {
 	}
 	/****************************runIntakeMotors()*******************************
 	 * Purpose:
-	 * 		Runs motors in opposite directions while intake pistons are extended.
+	 * 		
 	 * Parameters:
 	 * 		N/A
 	 * Returns:
 	 * 		N/A
 	 * Notes:
-	 * 		also allows for intakeMotorButton to spin wheels while pistons are retracted.
-	 * 		pressing this button should cycle the motors between off, intake, and outake
+	 * 		
 	 * Type: Method	
 	 **********************************************************************/
 	public static void runIntakeMotors(){
+		if(gamePad.getRawButton(Controls.intakeMotorOut)){
+			intakeMotorsManual(2);
+		}
 		
-		if(ifIntakeForward() ){ 
-			mIntakeNormal(); //not sure if this should be here or in runIntakePistons (iterating through sets this each time it iterates)
-			if(intakeMotorInDebounce.getRise()){
-				updateMotorDirection = -updateMotorDirection;
-			}
+		else if(gamePad.getRawButton(Controls.intakeMotorIn)){
+			intakeMotorsManual(1);
 		}
-		else if(intakeMotorOutDebounce.getRise() && ifIntakeReverse() ){
-			intakeMotorPos++;
-			intakeMotorsManual(intakeMotorPos % 3);
+		
+		else{
+			intakeMotorsManual(0);
 		}
+			
 		
 	}
 	
@@ -124,13 +123,14 @@ public class Intake {
 		case 0:
 			mIntakeStop();
 			break;
-		case 1:
+		case 1: //intake
 			mIntakeLeftMotor(reverse);
 			mIntakeRightMotor(forward);
 			break;
-		case 2:
+		case 2: //outakes
 			mIntakeLeftMotor(forward);
 			mIntakeRightMotor(reverse);
+			break;
 		default:
 			mIntakeStop();
 			break;
@@ -244,8 +244,8 @@ public class Intake {
 	 * Type: Method	
 	 **********************************************************************/
 	public static void mIntakeNormal(){
-		mIntakeLeftMotor(reverse * updateMotorDirection);
-		mIntakeRightMotor(forward * updateMotorDirection);
+		mIntakeLeftMotor(reverse);
+		mIntakeRightMotor(forward);
 	}
 	
 	/****************************mIntakeLeftMotor()*******************************
